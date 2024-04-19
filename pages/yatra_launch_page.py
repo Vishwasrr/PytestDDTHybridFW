@@ -13,6 +13,7 @@ from base.base_driver import BaseDriver
 class LaunchPage(BaseDriver):
 
     log = Utils.custom_logger(logLevel=logging.INFO)
+
     def __init__(self, driver) -> None:
         super().__init__(driver)
         self.driver = driver
@@ -66,7 +67,7 @@ class LaunchPage(BaseDriver):
             if goingtolocation in results.text:
                 results.click()
                 break
-        # self.log.info(search_results)
+        self.log.info(search_results)
 
     def enterDepartureDate(self, departuredate):
         try:
@@ -88,14 +89,15 @@ class LaunchPage(BaseDriver):
 
     def clickSearchFlightsButton(self):
         self.getSearchButton().click()
-        sleep(4)
+        sleep(1)
 
     def searchFlights(self, departlocation, goingtolocation, departuredate):
+        # sleep(2)
         self.enterDepartFromLocation(departlocation)
-        sleep(3)
+        # sleep(2)
         self.enterGoingToLocation(goingtolocation)
         self.enterDepartureDate(departuredate)
-        sleep(3)
+        # sleep(2)
         self.clickSearchFlightsButton()
         search_flight_result = SearchFlightResults(self.driver)
         return search_flight_result

@@ -9,10 +9,11 @@ from utilities.utils import Utils
 import pytest
 import softest
 import logging
-from ddt import data, unpack, file_data
+from ddt import data, ddt, unpack, file_data
 
 
 @pytest.mark.usefixtures("setup")
+@ddt
 class TestSearchAndVerifyFilter(softest.TestCase):
 
     log = Utils.custom_logger(logLevel=logging.INFO)
@@ -23,23 +24,28 @@ class TestSearchAndVerifyFilter(softest.TestCase):
         self.launch_page = LaunchPage(self.driver)
         self.utils = Utils()
 
-    # @file_data(Utils.read_data_from_excel(PATH))
 
-    # @data(*Utils.read_data_from_csv(PATH))
-    # @unpack
-    # @pytest.mark.parametrize("goingfrom,goingto,date,stops", *Utils.read_data_from_csv(PATH))
-    def test_search_flight_1_stop(self):
-        # print(goingfrom, goingto, date, stops)
+    print(*Utils.read_data_from_csv(PATH))
+    @data(*Utils.read_data_from_csv(PATH))
+    @unpack
+    def test_search_flight_1_stop(self, goingfrom, goingto, departuredate, stops):
         sleep(2)
+        # search_flight_results = self.launch_page.searchFlights(
+        #     "New Delhi", "BOM", "19/04/2024")
+        
         search_flight_results = self.launch_page.searchFlights(
-            "New Delhi", "BOM", "16/04/2024")
+            goingfrom, goingto, departuredate)
+        
+
         self.launch_page.page_scroll()
-        search_flight_results.filter_flights_by_stop("1 Stop")
+        # search_flight_results.filter_flights_by_stop("1 Stop")
+        search_flight_results.filter_flights_by_stop(stops)
         all_stops = search_flight_results.get_search_flight_results()
         self.log.info(len(all_stops))
 
         # ut = Utils()
-        self.utils.assertListItemText(all_stops, "1 Stop")
+        # self.utils.assertListItemText(all_stops, "1 Stop")
+        self.utils.assertListItemText(all_stops, stops)
 
     # def test_search_flight_2_stop(self):
     #     sleep(2)

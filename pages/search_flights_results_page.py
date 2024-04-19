@@ -18,21 +18,18 @@ class SearchFlightResults(BaseDriver):
     # changed grey to gray
     FILTER_BY_1_STOP_ICON = "//p[@class='font-lightgrey bold'][normalize-space()='1']"
     FILTER_BY_2_STOP_ICON = "//p[@class='font-lightgrey bold'][normalize-space()='2']"
-
-    # changed zero to one, revert it for accurate results, and revisit ddt
     SEARCH_FLIGHT_RESULTS = "//span[contains(text(), '1 Stop') or contains(text(), '2 Stop') or contains(text(), 'Non Stop')]"
-    # SEARCH_FLIGHT_RESULTS = "//*[matches(text(), '^\d+ Stop$') or matches(text(), '^Non Stop$')]"
 
     def get_filter_by_one_stop_icon(self):
-        sleep(5)
+        # sleep(2)
         return self.wait_until_element_is_clickable(By.XPATH, self.FILTER_BY_1_STOP_ICON)
 
     def get_filter_by_two_stop_icon(self):
-        sleep(5)
+        # sleep(2)
         return self.wait_until_element_is_clickable(By.XPATH, self.FILTER_BY_2_STOP_ICON)
 
     def get_filter_by_non_stop_icon(self):
-        sleep(5)
+        # sleep(2)
         return self.wait_until_element_is_clickable(By.XPATH, self.FILTER_BY_NON_STOP_ICON)
 
     def get_search_flight_results(self):
@@ -41,13 +38,13 @@ class SearchFlightResults(BaseDriver):
     def filter_flights_by_stop(self, by_stop):
         if by_stop == '1 Stop':
             self.get_filter_by_one_stop_icon().click()
-            sleep(2)
+            # sleep(2)
         elif by_stop == '2 Stop':
             self.get_filter_by_two_stop_icon().click()
-            sleep(2)
+            # sleep(2)
         else:
             self.get_filter_by_non_stop_icon().click()
-            sleep(2)
+            # sleep(2)
         self.log.warning(f'Selecting {by_stop.split()[0]} stop flights')
 
     # def filter_flights(self):

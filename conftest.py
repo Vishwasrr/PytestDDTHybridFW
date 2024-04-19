@@ -7,7 +7,7 @@ import time
 driver = None
 
 
-@pytest.fixture(scope='class', autouse=True)
+@pytest.fixture(autouse=True)
 def setup(request, browser):
     log = Utils.custom_logger()
     options = webdriver.ChromeOptions()
@@ -36,7 +36,7 @@ def pytest_addoption(parser):
     # parser.addoption("--browser")
 
 
-@pytest.fixture(scope='class')
+@pytest.fixture(scope='class', autouse=True)
 def browser(request):
     return request.config.getoption("--browser")
 
